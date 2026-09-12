@@ -11,7 +11,7 @@ from sklearn.metrics import classification_report, accuracy_score
 
 # 1. Load Data
 # Replace 'data/dataset.csv' with your actual data file path
-df = pd.read_csv('data/dataset.csv')
+df = pd.read_csv('data/loan-dataset.csv')
 
 # 2. Data Cleaning & Outlier Removal
 # Strip currency symbols and commas if loan_amnt is string
