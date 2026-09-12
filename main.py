@@ -10,26 +10,31 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, accuracy_score
 
 # 1. Load Data
-# Replace 'data/dataset.csv' with your actual data file path
-df = pd.read_csv('data/loan-dataset.csv')
+file_path = 'data/loan-dataset.csv'
+df = pd.read_csv(file_path)
 
-# 2. Data Cleaning & Outlier Removal
-# Strip currency symbols and commas if loan_amnt is string
-if df['loan_amnt'].dtype == 'object':
-    df['loan_amnt'] = df['loan_amnt'].astype(str).str.replace('£', '').str.replace(',', '').astype(float)
+# 2. Safe Data Cleaning & Conditional Filtering
+if 'loan_amnt' in df.columns:
+    if df['loan_amnt'].dtype == 'object':
+        df['loan_amnt'] = df['loan_amnt'].astype(str).str.replace('£', '').str.replace(',', '').astype(float)
 
-# Filter age outliers
-df = df[(df['customer_age'] >= 18) & (df['customer_age'] <= 100)]
+if 'customer_age' in df.columns:
+    df = df[(df['customer_age'] >= 18) & (df['customer_age'] <= 100)]
 
-# Drop high-missingness column if necessary or let imputer handle missing values
 if 'historical_default' in df.columns:
     df['historical_default'] = df['historical_default'].fillna('Unknown')
 
 # 3. Feature Selection & Target Separation
-X = df.drop(columns=['target_column'])  # Replace 'target_column' with your actual label column name
-y = df['target_column']
+# Default to the last column if 'target_column' is not explicitly present in df
+target_col = 'target_column'
+if target_col not in df.columns:
+    target_col = df.columns[-1]
+    print(f"Target column 'target_column' not found. Defaulting to last column: '{target_col}'")
 
-# Define numeric and categorical columns
+X = df.drop(columns=[target_col])
+y = df[target_col]
+
+# Define numeric and categorical columns dynamically
 numeric_features = X.select_dtypes(include=['int64', 'float64']).columns
 categorical_features = X.select_dtypes(include=['object', 'category']).columns
 
