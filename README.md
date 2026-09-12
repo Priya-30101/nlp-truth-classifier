@@ -1,5 +1,6 @@
 # NLP Truth Classifier 
 An NLP Truth Classifier (or Fake News / Deception Detector) is a Natural Language Processing and Machine Learning system built to evaluate textual content and classify it as genuine (truth/authentic) or deceptive (fake/misleading).In modern data science workflows, these pipelines process unstructured text or metadata, transform it into numerical features, and evaluate prediction accuracy using classification algorithms.
+
 Core Pipeline Architecture[Raw Input Text] ──> [Preprocessing & Tokenization] ──> [Vectorization / Embeddings] ──> [ML / DL Classifier] ──> [Truth vs. Fake Output]
 1. Data Preprocessing & CleaningText Normalization: Converts text to lowercase, strips URLs, HTML tags, punctuation, and special characters.
 2. Stop Word Removal & Tokenization: Filters out non-informative words (e.g., "the", "is") and splits sentences into individual token vectors.
